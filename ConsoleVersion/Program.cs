@@ -61,7 +61,7 @@ namespace LocalTests
 
             await File.WriteAllTextAsync("Result.txt", resultString);
 
-            System.Console.WriteLine(resultString);
+            // System.Console.WriteLine(resultString);
             // System.Console.WriteLine(result.toString());
         }
     }
