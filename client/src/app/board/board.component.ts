@@ -19,8 +19,9 @@ export class BoardComponent implements OnInit {
   }
 
   getBoardFromAPI() {
-    this.http.get('https://localhost:5001/api/sudoku').subscribe(response => {
+    this.http.get('https://localhost:5001/api/sudoku/530070000600195000098000060800060003400803001700020006060000280000419005000080079').subscribe(response => {
       this.sBoard = response;
+      this.sBoard = this.sBoard.board.split('');
     });
   }
 
