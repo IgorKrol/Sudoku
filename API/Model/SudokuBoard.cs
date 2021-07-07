@@ -25,7 +25,26 @@ namespace Model
         {
             this.Board = board;
         }
+
+        public SudokuBoard(string board)
+        {
+            int[] tempBoard = new int[81];
+            for (int i = 0; i < tempBoard.Length; i++)
+            {
+                tempBoard[i] = int.Parse(board[i].ToString());
+            }
+            initBoard(tempBoard);
+            Failed = false;
+
+        }
         public SudokuBoard(int[] board)
+        {
+            initBoard(board);
+        }
+
+
+        // init this.Board with 1D array
+        private void initBoard(int[] board)
         {
             int sqrLength = (int)Math.Sqrt(Board.Length);
 

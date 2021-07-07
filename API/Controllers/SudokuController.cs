@@ -18,16 +18,22 @@ namespace API.Controllers
 
         }
 
-        [HttpGet()]
-        public ActionResult<SudokuBoardDto> Solution(SudokuBoardDto sbDto)
-        {
-            var result = new BackTracking().BacktrackingSearch(
-                new SudokuBoard(sbDto.Board)
-            );
-            
-            if (result.Failed) return null;
+        // GET /api/sudoku/{boardString}
+        // returns sudoku solution
 
-            return Ok(new SudokuBoardDto(result));
+        [HttpGet("{boardString}")]
+        public ActionResult<SudokuBoardDto> Solution(string boardString)
+        {
+            var result = new BackTracking()
+                .BacktrackingSearch(new SudokuBoard(boardString));
+            
+            var sbDto = new SudokuBoardDto(result);
+
+            if (result.Failed){
+                sbDto.Board = "failed";
+            }
+
+            return Ok(sbDto);
         }
     }
 }
