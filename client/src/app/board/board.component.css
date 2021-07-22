@@ -8,6 +8,20 @@
     font-size: 30pt;
 }
 
+.leftBorder{
+    border-left: 3px solid black;
+}
+.rightBorder{
+    border-right: 3px solid black;
+}
+.bottomBorder{
+    border-bottom: 3px solid black;
+}
+.topBorder{
+    border-top: 3px solid black;
+}
+
+
 #board {
     padding-top: 10px;
     margin-top: 10px;
@@ -15,6 +29,6 @@
     flex-wrap: wrap;
     justify-content: center;
     align-content: flex-start;
-    width: 600px;
-    height: 600px;
+    width: 630px;
+    height: 630px;
 }
