@@ -9,6 +9,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class BoardComponent implements OnInit {
   doc = document;
+  isValid = true;
   sBoard: any;
   Counter = 0;
 
@@ -21,28 +22,79 @@ export class BoardComponent implements OnInit {
     this.sBoard = temp.split('');
   }
 
+
+  //validation for same number in col or row
+  validation(): void {
+    var flag = true;
+
+    for (let i = 0; i < 9; i++) {
+      if (!this.columnValidation(i) || !this.rowsValidation(i)) {
+        flag = false;
+      }
+    }
+
+    this.isValid = flag;
+  }
+
+  // 0 col => 0,9,18..
+  // x col => 9*i+x
+  columnValidation(col: number): boolean {
+    let arr = Array.from({length: 10}, (_) => 0);
+    
+    for (let i = 0; i < 9; i++) {
+      let tileValue = this.getValue('t' + (9 * i + col));
+
+      if (tileValue != '') {
+        arr[Number(tileValue)]++;
+      }
+    }
+    for (let i = 1; i < 10; i++) {
+      if (arr[i] > 1) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // x row => 9*x+i
+  rowsValidation(row: number): boolean {
+    let arr = Array.from({length: 10}, (_) => 0);
+    for (let i = 0; i < 9; i++) {
+      let tileValue = this.getValue('t' + (9 * row + i));
+      if (tileValue != '') {
+        arr[Number(tileValue)]++;
+      }
+    }
+    for (let i = 1; i < 10; i++) {      
+      if (arr[i] > 1) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   //reset board to 0 or no-value
   resetBoard() {
     for (let i = 0; i < this.sBoard.length; i++) {
-      this.sBoard[i]='0';
-      (<HTMLInputElement>this.doc.getElementById('t'+i)).value = '';
-    }    
+      this.sBoard[i] = '0';
+      (<HTMLInputElement>this.doc.getElementById('t' + i)).value = '';
+    }
   }
 
   //return readonly value
-  getValue(id:string){
+  getValue(id: string) {
     return (<HTMLInputElement>this.doc.getElementById(id))?.value;
   }
 
   //convert board from string[] to String
   boardToString(): string {
     let res = '';
+
     for (let i = 0; i < this.sBoard.length; i++) {
-      let tileValue = this.getValue('t'+i); 
+      let tileValue = this.getValue('t' + i);
       res += tileValue == '' ? '0' : tileValue;
     }
-    console.log(res);
-    
+
     return res;
   }
 
