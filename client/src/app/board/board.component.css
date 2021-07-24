@@ -8,6 +8,12 @@
     font-size: 30pt;
 }
 
+#tb {
+    text-align: center;
+    margin: 0px;
+    vertical-align: middle;
+}
+
 .leftBorder{
     border-left: 3px solid black;
 }

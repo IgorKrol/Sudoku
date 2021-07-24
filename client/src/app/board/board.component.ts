@@ -8,6 +8,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   styleUrls: ['./board.component.css']
 })
 export class BoardComponent implements OnInit {
+  doc = document;
   sBoard: any;
   Counter = 0;
 
@@ -20,39 +21,50 @@ export class BoardComponent implements OnInit {
     this.sBoard = temp.split('');
   }
 
-  // nothing for now.
-  // getBoardFromAPI() {
-  //   this.http.get('https://localhost:5001/api/sudoku/530070000600195000098000060800060003400803001700020006060000280000419005000080079').subscribe(response => {
-  //     this.sBoard = response;
-  //     this.sBoard = this.sBoard.board.split('');
-  //   });
-  // }
+  //reset board to 0 or no-value
+  resetBoard() {
+    for (let i = 0; i < this.sBoard.length; i++) {
+      this.sBoard[i]='0';
+      (<HTMLInputElement>this.doc.getElementById('t'+i)).value = '';
+    }    
+  }
 
+  //return readonly value
+  getValue(id:string){
+    return (<HTMLInputElement>this.doc.getElementById(id))?.value;
+  }
 
   //convert board from string[] to String
-  boardToString(): string{
+  boardToString(): string {
     let res = '';
-    for(let s in this.sBoard){
-      res += s==' '? '0' : s;
+    for (let i = 0; i < this.sBoard.length; i++) {
+      let tileValue = this.getValue('t'+i); 
+      res += tileValue == '' ? '0' : tileValue;
     }
+    console.log(res);
+    
     return res;
   }
 
 
   //send board for solving 
-  solve(){
-    this.http.get('https://localhost:5001/api/sudoku/'+ this.boardToString()).subscribe(response => {
+  solve() {
+    this.http.get('https://localhost:5001/api/sudoku/' + this.boardToString()).subscribe(response => {
       this.sBoard = response;
       this.sBoard = this.sBoard.board.split('');
     })
+
   }
 
   //convert single zero on board to empty space
   convertZeroToEmpty(s: string) {
     if (s.includes('0'))
-      return ' ';
+      return '';
     return s;
   }
+
+
+  //STYLE
 
   // method for selecting rough border - style
   isTop(i: number): boolean {
@@ -65,8 +77,8 @@ export class BoardComponent implements OnInit {
   }
 
   // method for selecting rough border - style
-  isLeft(i: number){
-    if (i%3==0)
+  isLeft(i: number) {
+    if (i % 3 == 0)
       return true;
     return false;
   }

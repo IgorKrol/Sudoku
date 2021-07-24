@@ -1,8 +1,13 @@
-<div>
+<div id="tb">
+    <button class="btn-success" (click)="solve()">Solve</button>
+    <button class="btn btn-primary" (click)="resetBoard()">Reset</button>
     <div id="board">
-        <input *ngFor="let number of sBoard; let i=index" type="text" pattern="[0-9]" maxlength="1"
+        <input *ngFor="let number of sBoard; let i=index" 
+            type="text" 
+            pattern="[0-9]" 
+            maxlength="1"
             value={{convertZeroToEmpty(number)}}
-            [ngClass]="{'tile': true, 'topBorder': isTop(i), 'leftBorder': isLeft(i)}" id="tile{{i}}">
+            [ngClass]="{'tile': true, 'topBorder': isTop(i), 'leftBorder': isLeft(i)}" 
+            id="t{{i}}">
     </div>
-    
 </div>
